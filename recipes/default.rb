@@ -39,7 +39,7 @@ if node['platform'] == 'mac_os_x'
   end
 else
   include_recipe 'apt'
-  apt_repository "nginx-php" do
+  apt_repository "git-annex" do
     uri 'http://ppa.launchpad.net/fmarier/git-annex/ubuntu'
     distribution node['lsb']['codename']
     components ["main"]
