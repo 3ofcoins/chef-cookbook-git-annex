@@ -44,7 +44,7 @@ else
     distribution node['lsb']['codename']
     components ["main"]
     keyserver "keyserver.ubuntu.com"
-    key "C300EE8C"
+    key "90F7E9EB"
     only_if { node['platform'] == 'ubuntu' && node['lsb']['codename'] == 'precise' }
   end
   package 'git-annex'
