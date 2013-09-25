@@ -1,6 +1,11 @@
 Change History
 ==============
 
+0.1.2
+-----
+ - Drop checksums for OSX, it's a moving target
+ - Add link to self-compiled DMG for Snow Leopard
+
 0.1.1
 -----
  - Update PGP fingerprint
