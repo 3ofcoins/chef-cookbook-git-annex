@@ -17,14 +17,14 @@ if node['platform'] == 'mac_os_x'
 
   dmg_path = "#{Chef::Config[:file_cache_path]}/git-annex.dmg"
 
-  execute "bunzip2 -c #{dmg_path}.bz2 > #{dmg_path}.orig" do
+  execute "bunzip2 -c #{dmg_path}.bz2 > #{dmg_path}" do
     action :nothing
-    creates "#{dmg_path}.orig"
+    creates dmg_path
   end
 
   remote_file "#{dmg_path}.bz2" do
     source dmg_bz2_url
-    notifies :run, "execute[bunzip2 -c #{dmg_path}.bz2 > #{dmg_path}.orig]", :immediately
+    notifies :run, "execute[bunzip2 -c #{dmg_path}.bz2 > #{dmg_path}]", :immediately
   end
 
   dmg_package 'git-annex' do

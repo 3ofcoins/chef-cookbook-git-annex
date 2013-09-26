@@ -1,6 +1,10 @@
 Change History
 ==============
 
+0.1.3
+-----
+ - Fix OSX
+
 0.1.2
 -----
  - Drop checksums for OSX, it's a moving target
