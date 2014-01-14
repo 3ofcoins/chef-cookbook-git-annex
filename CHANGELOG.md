@@ -1,6 +1,10 @@
 Change History
 ==============
 
+0.1.4
+-----
+ - Support OSX Mavericks, update URLs
+
 0.1.3
 -----
  - Fix OSX

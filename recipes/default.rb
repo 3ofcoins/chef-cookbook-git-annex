@@ -6,27 +6,36 @@ if node['platform'] == 'mac_os_x'
 
   case node['platform_version']
   when /^10\.6\./
-    dmg_bz2_url = "https://s3.amazonaws.com/downloads.3ofcoins.net/git-annex/OSX-10.6-Snow_Leopard/git-annex.dmg.bz2"
+    dmg_url = "https://s3.amazonaws.com/downloads.3ofcoins.net/git-annex/OSX-10.6-Snow_Leopard/git-annex.dmg.bz2"
   when /^10\.7\./
-    dmg_bz2_url = "http://downloads.kitenet.net/git-annex/OSX/current/10.7.5_Lion/git-annex.dmg.bz2"
+    dmg_url = "http://downloads.kitenet.net/git-annex/OSX/current/10.7.5_Lion/git-annex.dmg"
   when /^10\.8\./
-    dmg_bz2_url = "http://downloads.kitenet.net/git-annex/OSX/current/10.8.2_Mountain_Lion/git-annex.dmg.bz2"
+    dmg_url = "http://downloads.kitenet.net/git-annex/OSX/current/10.8.2_Mountain_Lion/git-annex.dmg.bz2"
+  when /^10\.9\./
+    dmg_url = "http://downloads.kitenet.net/git-annex/OSX/current/10.9_Mavericks/git-annex.dmg"
   else
     raise "OSX #{node['platform_version']} not supported"
   end
 
   dmg_path = "#{Chef::Config[:file_cache_path]}/git-annex.dmg"
 
-  remote_file "#{dmg_path}.bz2" do
-    source dmg_bz2_url
-  end
+  if dmg_url =~ /\.bz2$/
+    remote_file "#{dmg_path}.bz2" do
+      source dmg_url
+    end
 
-  execute "bunzip2 -c #{dmg_path}.bz2 > #{dmg_path}" do
-    creates dmg_path
-  end
+    execute "bunzip2 -c #{dmg_path}.bz2 > #{dmg_path}" do
+      creates dmg_path
+    end
 
-  dmg_package 'git-annex' do
-    action :install
+    dmg_package 'git-annex' do
+      action :install
+    end
+  else
+    dmg_package 'git-annex' do
+      source dmg_url
+      action :install
+    end
   end
 
   %w[git-annex git-annex-shell git-annex-webapp runshell bundle].each do |bin|
