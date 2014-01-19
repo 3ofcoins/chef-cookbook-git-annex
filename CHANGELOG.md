@@ -1,6 +1,10 @@
 Change History
 ==============
 
+0.1.5
+-----
+ - Add generic precompiled Linux tarball
+
 0.1.4
 -----
  - Support OSX Mavericks, update URLs
