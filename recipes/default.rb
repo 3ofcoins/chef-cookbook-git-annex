@@ -39,6 +39,8 @@ when 'mac_os_x'
     end
   end
 
+  directory "/usr/local/bin"
+
   %w[git-annex git-annex-shell git-annex-webapp runshell bundle].each do |bin|
     link "/usr/local/bin/#{bin}" do
       to "/Applications/git-annex.app/Contents/MacOS/#{bin}"

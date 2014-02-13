@@ -1,6 +1,10 @@
 Change History
 ==============
 
+0.1.6
+-----
+ - Don't break on OSX if `/usr/local/bin` does not exist yet
+
 0.1.5
 -----
  - Add generic precompiled Linux tarball
