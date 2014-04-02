@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+#
 # Git Annex
 # =========
 
@@ -7,15 +9,15 @@ when 'mac_os_x'
 
   case node['platform_version']
   when /^10\.6\./
-    dmg_url = "https://s3.amazonaws.com/downloads.3ofcoins.net/git-annex/OSX-10.6-Snow_Leopard/git-annex.dmg.bz2"
+    dmg_url = 'https://s3.amazonaws.com/downloads.3ofcoins.net/git-annex/OSX-10.6-Snow_Leopard/git-annex.dmg.bz2'
   when /^10\.7\./
-    dmg_url = "http://downloads.kitenet.net/git-annex/OSX/current/10.7.5_Lion/git-annex.dmg"
+    dmg_url = 'http://downloads.kitenet.net/git-annex/OSX/current/10.7.5_Lion/git-annex.dmg'
   when /^10\.8\./
-    dmg_url = "http://downloads.kitenet.net/git-annex/OSX/current/10.8.2_Mountain_Lion/git-annex.dmg.bz2"
+    dmg_url = 'http://downloads.kitenet.net/git-annex/OSX/current/10.8.2_Mountain_Lion/git-annex.dmg.bz2'
   when /^10\.9\./
-    dmg_url = "http://downloads.kitenet.net/git-annex/OSX/current/10.9_Mavericks/git-annex.dmg"
+    dmg_url = 'http://downloads.kitenet.net/git-annex/OSX/current/10.9_Mavericks/git-annex.dmg'
   else
-    raise "OSX #{node['platform_version']} not supported"
+    fail "OSX #{node['platform_version']} not supported"
   end
 
   dmg_path = "#{Chef::Config[:file_cache_path]}/git-annex.dmg"
@@ -39,21 +41,21 @@ when 'mac_os_x'
     end
   end
 
-  directory "/usr/local/bin"
+  directory '/usr/local/bin'
 
-  %w[git-annex git-annex-shell git-annex-webapp runshell bundle].each do |bin|
+  %w(git-annex git-annex-shell git-annex-webapp runshell bundle).each do |bin|
     link "/usr/local/bin/#{bin}" do
       to "/Applications/git-annex.app/Contents/MacOS/#{bin}"
     end
   end
 when 'ubuntu'
   include_recipe 'apt'
-  apt_repository "git-annex" do
+  apt_repository 'git-annex' do
     uri 'http://ppa.launchpad.net/fmarier/git-annex/ubuntu'
     distribution node['lsb']['codename']
-    components ["main"]
-    keyserver "keyserver.ubuntu.com"
-    key "90F7E9EB"
+    components ['main']
+    keyserver 'keyserver.ubuntu.com'
+    key '90F7E9EB'
     only_if { node['platform'] == 'ubuntu' && node['lsb']['codename'] == 'precise' }
   end
   package 'git-annex'
@@ -63,7 +65,7 @@ else
               when /^i.86$/ then 'i386'
               when 'amd64', 'x86_64' then 'amd64'
               when 'armel' then 'armel'
-              else raise "Unsupported machine #{node['kernel']['machine']}"
+              else fail "Unsupported machine #{node['kernel']['machine']}"
               end
     ga_path = "#{Chef::Config[:file_cache_path]}/git-annex.tar.gz"
     remote_file ga_path do
@@ -71,13 +73,13 @@ else
     end
 
     execute "tar -C /opt -xzf #{ga_path}" do
-      creates "/opt/git-annex.linux/git-annex"
+      creates '/opt/git-annex.linux/git-annex'
     end
 
-    link "/usr/local/bin/git-annex" do
-      to "/opt/git-annex.linux/git-annex"
+    link '/usr/local/bin/git-annex' do
+      to '/opt/git-annex.linux/git-annex'
     end
   else
-    raise "Only Linux and OSX is supported"
+    fail 'Only Linux and OSX is supported'
   end
 end

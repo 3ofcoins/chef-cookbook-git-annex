@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 require 'chef/mixin/shell_out'
 require 'wrong'
 
